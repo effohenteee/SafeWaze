@@ -1,0 +1,8 @@
+<RCC>
+  <qresource prefix="Logo">
+    <file>Resources/Logo/SafeWaze-Logo-420x105.png</file>
+  </qresource>
+  <qresource prefix="Wallpaper">
+    <file>Resources/Wallpapers/Login/login-gradient-480x640.png</file>
+  </qresource>
+</RCC>
