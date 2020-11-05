@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 
 import sys
-from package.ui.mplwidget_ui import Ui_MplWidget as MatplotlibWidget
+from package.ui.mplwidget_ui import Ui_MplWidget
 
 from PyQt5.QtWidgets import QApplication, QSizePolicy, QVBoxLayout, QWidget
 
@@ -12,14 +13,12 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as Canvas
 import random
 
 
-class MplWidget(QWidget, MatplotlibWidget):
+class MplWidget(QWidget, Ui_MplWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
         self.setupUi(self)
         self.initialize_ui()
-
-        self.show()
 
     def initialize_ui(self):
         self.fig = Figure()
@@ -32,8 +31,11 @@ class MplWidget(QWidget, MatplotlibWidget):
         self.plot()
 
     def plot(self):
+        random.seed()
         data = [random.random() for i in range(25)]
         ax = self.fig.add_subplot(111)
+        self.fig.tight_layout()
+        self.fig.subplots_adjust(top=0.90)
         ax.plot(data, 'r-')
         ax.set_title('PyQt Matplotlib Example')
         self.canvas.draw()
@@ -41,5 +43,6 @@ class MplWidget(QWidget, MatplotlibWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    example = MplWidget()
+    mplwidget = MplWidget()
+    mplwidget.show()
     sys.exit(app.exec_())

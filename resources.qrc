@@ -6,6 +6,7 @@
     <file>Resources/Risk-Gradient/V2/gradient-v2-600x600.png</file>
   </qresource>
   <qresource prefix="Wallpaper">
-    <file>Resources/Wallpapers/Login/login-gradient-480x640.png</file>
+    <file>Resources/Wallpapers/Login/login-gradient-alpha-60-480x640.png</file>
+    <file>Resources/Wallpapers/Login/login-gradient-alpha-100-480x640.png</file>
   </qresource>
 </RCC>

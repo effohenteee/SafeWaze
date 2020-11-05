@@ -18,9 +18,9 @@ class Ui_MplWidget(object):
         self.plotwidget = QtWidgets.QWidget(MplWidget)
         self.plotwidget.setGeometry(QtCore.QRect(9, 9, 772, 521))
         self.plotwidget.setObjectName("plotwidget")
-        self.pushButton = QtWidgets.QPushButton(MplWidget)
-        self.pushButton.setGeometry(QtCore.QRect(690, 560, 89, 25))
-        self.pushButton.setObjectName("pushButton")
+        # self.pushButton = QtWidgets.QPushButton(MplWidget)
+        # self.pushButton.setGeometry(QtCore.QRect(690, 560, 89, 25))
+        # self.pushButton.setObjectName("pushButton")
 
         self.retranslateUi(MplWidget)
         QtCore.QMetaObject.connectSlotsByName(MplWidget)
@@ -28,4 +28,4 @@ class Ui_MplWidget(object):
     def retranslateUi(self, MplWidget):
         _translate = QtCore.QCoreApplication.translate
         MplWidget.setWindowTitle(_translate("MplWidget", "Form"))
-        self.pushButton.setText(_translate("MplWidget", "PushButton"))
+        # self.pushButton.setText(_translate("MplWidget", "PushButton"))
