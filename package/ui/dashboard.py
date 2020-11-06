@@ -26,6 +26,7 @@ class Dashboard(QMainWindow, Ui_Dashboard):
 
         self.frame_graph.deleteLater()
         self.chart = MplWidget()
+        self.chart.update_chart(14)
         self.vbox_tab_1.addWidget(self.chart)
         self.center_window()
 
