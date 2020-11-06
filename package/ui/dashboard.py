@@ -16,7 +16,6 @@ class Dashboard(QMainWindow, Ui_Dashboard):
         super().__init__(parent)
         self.setupUi(self)
         self.initialize_ui()
-        self.chart.update_chart()
         return
 
     def initialize_ui(self):
@@ -27,7 +26,7 @@ class Dashboard(QMainWindow, Ui_Dashboard):
 
         self.frame_graph.deleteLater()
         self.chart = MplWidget()
-        self.vbox_tab_1.addWidget(self.chart.plotwidget)
+        self.vbox_tab_1.addWidget(self.chart)
         self.center_window()
 
         return
