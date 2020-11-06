@@ -8,7 +8,7 @@ from PyQt5.QtCore import Qt
 
 
 from package.ui.dashboard_ui import Ui_Dashboard
-from package.ui.mplwidget import MplWidget
+from package.ui.chartwidget import ChartWidget
 
 
 class Dashboard(QMainWindow, Ui_Dashboard):
@@ -25,7 +25,7 @@ class Dashboard(QMainWindow, Ui_Dashboard):
         )
 
         self.frame_graph.deleteLater()
-        self.chart = MplWidget()
+        self.chart = ChartWidget()
         self.chart.update_chart(14)
         self.vbox_tab_1.addWidget(self.chart)
         self.center_window()

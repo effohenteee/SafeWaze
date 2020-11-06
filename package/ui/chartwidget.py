@@ -3,7 +3,6 @@
 import random
 import sys
 import package.util.dbhelpers as dbhelpers
-from package.ui.mplwidget_ui import Ui_MplWidget
 
 from PyQt5.QtCore import QMargins, Qt
 from PyQt5.QtGui import QPainter
@@ -12,16 +11,15 @@ from PyQt5.QtChart import QBarCategoryAxis, QBarSeries, \
 from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget
 
 
-class MplWidget(QWidget, Ui_MplWidget):
+class ChartWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-
-        self.setupUi(self)
         self.initialize_ui()
 
     def initialize_ui(self):
         self.chart_view = QChartView(self)
         self.chart_view.setMinimumHeight(300)
+        self.chart_view.resize(800,600)
         self.vbox = QVBoxLayout(self)
         self.vbox.addWidget(self.chart_view)
 
@@ -102,8 +100,8 @@ class MplWidget(QWidget, Ui_MplWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mplwidget1 = MplWidget()
-    mplwidget2 = MplWidget()
+    mplwidget1 = ChartWidget()
+    mplwidget2 = ChartWidget()
     mplwidget1.plot_random()
     mplwidget2.update_chart()
     mplwidget1.show()
