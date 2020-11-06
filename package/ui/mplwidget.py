@@ -71,7 +71,7 @@ class MplWidget(QWidget, Ui_MplWidget):
 
         self.chart_view.chart().deleteLater()
 
-        set0 = QBarSet('COVID Cases')
+        set0 = QBarSet('Daily COVID Cases')
 
         for x in new_cases_list:
             set0 << x
@@ -81,7 +81,8 @@ class MplWidget(QWidget, Ui_MplWidget):
 
         chart = QChart(flags=Qt.Widget)
         chart.addSeries(series)
-        chart.setTitle("New Blacksburg COVID Cases")
+        chart.createDefaultAxes()
+        chart.setTitle("New Blacksburg COVID Cases by Date")
 
         legend = chart.legend()
         legend.setAlignment(Qt.AlignBottom)
@@ -89,25 +90,22 @@ class MplWidget(QWidget, Ui_MplWidget):
         categories = dates_list
         axis = QBarCategoryAxis()
         axis.append(categories)
-        chart.createDefaultAxes()
-        chart.axisX().setTitleText('Date')
         chart.setAxisX(axis, series)
         chart.axisX().setLabelsAngle(-90)
-        chart.axisY().setTitleText('Cases')
         chart.setMargins(QMargins(0, 0, 0, 0))
-        # chart.layout().setContentsMargins(0, 0, 0, 0)
 
         self.chart_view.setRenderHint(QPainter.Antialiasing)
         self.chart_view.setChart(chart)
-
 
         return
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mplwidget = MplWidget()
-    # mplwidget.plot_random()
-    mplwidget.update_chart()
-    mplwidget.show()
+    mplwidget1 = MplWidget()
+    mplwidget2 = MplWidget()
+    mplwidget1.plot_random()
+    mplwidget2.update_chart()
+    mplwidget1.show()
+    mplwidget2.show()
     sys.exit(app.exec_())
