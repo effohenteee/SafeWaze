@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import package.util.dbhelpers as dbhelpers
+import package.util.dbhelper as dbhelper
 import re
 import sys
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
@@ -11,10 +11,10 @@ class SignUpDialog(QDialog, Ui_SignUpDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
+        self.initialize_ui()
 
     def initialize_ui(self):
-        # TODO: Might not need this
-        pass
+        self._db = dbhelper.DBHelper()
 
     def accept(self):
         self.verify_user_info()
@@ -58,11 +58,25 @@ class SignUpDialog(QDialog, Ui_SignUpDialog):
 
             return
 
-        dbhelpers.add_user(
-            self.lineEdit_username.text(),
-            self.lineEdit_email.text(),
+        new_username = self.lineEdit_username.text().lower()
+        new_email = self.lineEdit_email.text().lower()
+        user_added = self._db.add_user(
+            new_username,
+            new_email,
             self.lineEdit_password.text()
         )
+
+        if not user_added:
+            email_error = 'This email address is already in use'
+            QMessageBox.critical(self, 'Error', email_error)
+
+            return
+
+        QMessageBox.information(self, 'Success', 'Account creation successful')
+
+        # TODO Close the log in window and insert the username into the field
+        # emit a signal with the username??
+        return
 
     def verify_username(self, username):
         p = re.compile('^[A-Za-z][A-Za-z0-9]{3,20}$')
