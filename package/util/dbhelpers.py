@@ -4,6 +4,13 @@ from pymongo import MongoClient
 import package.util.covidstats as covidstats
 
 
+def add_user(username, email, password):
+    # TODO: Implement functionality
+    pass
+
+    return
+
+
 def clear_database():
     client = MongoClient()
     mydb = client['safewaze']

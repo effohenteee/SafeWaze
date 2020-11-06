@@ -33,7 +33,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="lable_username">
+    <widget class="QLabel" name="label_username">
      <property name="text">
       <string>Username</string>
      </property>
