@@ -4,7 +4,7 @@ import package.util.dbhelpers as dbhelpers
 import sys
 from package.ui.mplwidget_ui import Ui_MplWidget
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import QMargins, Qt
 from PyQt5.QtGui import QPainter
 from PyQt5.QtChart import QBarCategoryAxis, QBarSeries, \
     QBarSet, QChart, QChartView
@@ -26,25 +26,19 @@ class MplWidget(QWidget, Ui_MplWidget):
         self.initialize_ui()
 
     def initialize_ui(self):
-        self.fig = Figure()
-        self.canvas = Canvas(self.fig)
+        # self.fig = Figure()
+        # self.canvas = Canvas(self.fig)
         # self.ax = self.fig.add_subplot(111)  # Equivalent to 1, 1, 1
 
         # self.vbox = QVBoxLayout(self.plotwidget)
         # self.vbox.addWidget(self.canvas)
-
-        self.plot()
+        self.chart_view = QChartView(self)
+        self.vbox = QVBoxLayout(self)
+        self.vbox.addWidget(self.chart_view)
 
     def plot(self):
         random.seed()
-        data = [random.randint(0, 30) for i in range(25)]
-        # ax = self.fig.add_subplot(111)
-        # self.fig.tight_layout()
-        # self.fig.subplots_adjust(top=0.90)
-        # ax.plot(data, 'r-')
-        # ax.set_title('PyQt Matplotlib Example')
-        # self.canvas.draw()
-
+        data = [random.randint(0, 30) for i in range(20)]
         set0 = QBarSet('COVID Cases')
 
         for x in data:
@@ -53,22 +47,28 @@ class MplWidget(QWidget, Ui_MplWidget):
         series = QBarSeries()
         series.append(set0)
 
-        chart = QChart()
+        chart = QChart(flags=Qt.Widget)
         chart.addSeries(series)
         chart.setTitle("Blacksburg COVID Cases")
+
+        legend = chart.legend()
+        legend.setAlignment(Qt.AlignBottom)
 
         # categories = list(str(range(25)))
         # axis = QBarCategoryAxis()
         # axis.append(categories)
         chart.createDefaultAxes()
+        chart.axisX().setLabelsAngle(-90)
+        chart.axisX().setTitleText('Date')
         # chart.setAxisX(axis, series)
+        chart.axisY().setTitleText('Cases')
+        chart.setMargins(QMargins(0, 0, 0, 0))
+        # chart.layout().setContentsMargins(0, 0, 0, 0)
 
-        chart_view = QChartView(self)
-        chart_view.setRenderHint(QPainter.Antialiasing)
-        chart_view.setChart(chart)
+        self.chart_view.setRenderHint(QPainter.Antialiasing)
+        self.chart_view.setChart(chart)
 
-        self.vbox = QVBoxLayout(self)
-        self.vbox.addWidget(chart_view)
+
 
 def update_chart(self, num_ticks=10):
     results = dbhelpers.get_results_database()
@@ -100,5 +100,6 @@ def update_chart(self, num_ticks=10):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     mplwidget = MplWidget()
+    mplwidget.plot()
     mplwidget.show()
     sys.exit(app.exec_())
