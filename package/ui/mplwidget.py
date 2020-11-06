@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import package.util.dbhelpers as dbhelpers
 import sys
 from package.ui.mplwidget_ui import Ui_MplWidget
 
@@ -39,6 +40,32 @@ class MplWidget(QWidget, Ui_MplWidget):
         ax.plot(data, 'r-')
         ax.set_title('PyQt Matplotlib Example')
         self.canvas.draw()
+
+    def update_chart(self, num_ticks=10):
+        results = dbhelpers.get_results_database()
+        new_cases_list, dates_list = [], []
+
+        if results.count() + 1 < num_ticks:
+            return None
+
+        for i in range(num_ticks):
+            current_date = results[i]['report_date']
+            current_date = current_date.strftime(format='%m/%d')
+            next_cases = int(results[i]['number_of_cases'])
+            previous_cases = int(results[i + 1]['number_of_cases'])
+            new_cases = next_cases - previous_cases
+
+            dates_list.insert(0, current_date)
+            new_cases_list.insert(0, new_cases)
+
+        self.fig.clear()
+        self.fig.add_axes(xlabel='Date')
+        ax = self.fig.add_subplot(111)
+        ax.plot(dates_list, new_cases_list)
+        ax.set_title('Number of New COVID-19 Cases in Blacksburg by Date')
+        self.canvas.draw()
+
+        return
 
 
 if __name__ == '__main__':

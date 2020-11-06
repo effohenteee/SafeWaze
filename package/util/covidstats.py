@@ -13,7 +13,7 @@ def convert_datetime_column(data_frame):
 
 
 # TODO: Error handling? Make a class for parsing?
-def get_blacksburg_data(max_=30):
+def get_blacksburg_data(max_=2000):
     """
     Returns max_ number of results from the COVID dashboard for zip code 24060.
 
