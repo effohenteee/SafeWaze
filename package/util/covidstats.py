@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
 import pandas as pd
-from sodapy import Socrata
+import sodapy
 
 
+# TODO: Docs
 def convert_datetime_column(data_frame):
     df = pd.DataFrame(data_frame, columns=['report_date'])
     df = pd.to_datetime(df['report_date'], format='%Y-%m-%dT%H:%M:%S')
@@ -12,7 +13,6 @@ def convert_datetime_column(data_frame):
     return data_frame
 
 
-# TODO: Error handling? Make a class for parsing?
 def get_blacksburg_data(max_=2000):
     """
     Returns max_ number of results from the COVID dashboard for zip code 24060.
@@ -27,7 +27,7 @@ def get_blacksburg_data(max_=2000):
     """
     # Unauthenticated client only works with public data sets. Note 'None'
     # in place of application token, and no username or password:
-    client = Socrata('data.virginia.gov', None)
+    client = sodapy.Socrata('data.virginia.gov', None)
 
     # Example authenticated client(needed for non - public datasets):
     # client = Socrata(data.virginia.gov,
@@ -41,6 +41,7 @@ def get_blacksburg_data(max_=2000):
 
     # Convert to pandas DataFrame
     results = pd.DataFrame.from_records(results)
+
     # Convert report_date to pandas Timestamp class
     results = convert_datetime_column(results)
     return results

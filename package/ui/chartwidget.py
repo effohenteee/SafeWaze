@@ -2,7 +2,7 @@
 
 import random
 import sys
-import package.util.dbhelpers as dbhelpers
+import package.util.dbhelper as dbhelper
 
 from PyQt5.QtCore import QMargins, Qt
 from PyQt5.QtGui import QPainter
@@ -51,7 +51,8 @@ class ChartWidget(QWidget):
         self.chart_view.setChart(chart)
 
     def update_chart(self, num_ticks=10):
-        results = dbhelpers.get_results_database()
+        self.db = dbhelper.DBHelper()
+        results = self.db.get_results_database()
         new_cases_list, dates_list = [], []
 
         if results.count() + 1 < num_ticks:

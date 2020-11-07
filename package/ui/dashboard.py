@@ -1,24 +1,23 @@
 #!/usr/bin/env python3
 
 import sys
-from pymongo import MongoClient
-from datetime import datetime, timedelta
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, QWidget
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow
 from PyQt5.QtCore import Qt
 
-
-from package.ui.dashboard_ui import Ui_Dashboard
 from package.ui.chartwidget import ChartWidget
+from package.ui.dashboard_ui import Ui_Dashboard
 
 
 class Dashboard(QMainWindow, Ui_Dashboard):
+    # TODO: Update stale data on login (medium priority)
+    # TODO: Periodically check for new COVID data from Socrata (low priority)
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setupUi(self)
-        self.initialize_ui()
+        self._initialize_ui()
         return
 
-    def initialize_ui(self):
+    def _initialize_ui(self):
         self.setWindowFlags(
             Qt.WindowMinMaxButtonsHint |
             Qt.WindowCloseButtonHint
@@ -28,11 +27,11 @@ class Dashboard(QMainWindow, Ui_Dashboard):
         self.chart = ChartWidget()
         self.chart.update_chart(14)
         self.vbox_tab_1.addWidget(self.chart)
-        self.center_window()
+        self._center_window()
 
         return
 
-    def center_window(self):
+    def _center_window(self):
         rectangle = self.frameGeometry()
         center_point = QDesktopWidget().availableGeometry().center()
         rectangle.moveCenter(center_point)

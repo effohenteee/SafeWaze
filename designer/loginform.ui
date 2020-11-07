@@ -30,7 +30,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#LoginWidget {
-background-image: url(:/Wallpaper/Resources/Wallpapers/Login/login-gradient-480x640.png);
+background-image: url(:/Wallpaper/Resources/Wallpapers/Login/login-gradient-alpha-100-480x640.png);
 }
 
 QLineEdit {
@@ -47,7 +47,7 @@ QPushButton.pressed {
 background: transparent;
 }</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit_username">
+  <widget class="QLineEdit" name="lineEdit_email">
    <property name="geometry">
     <rect>
      <x>90</x>
@@ -56,11 +56,8 @@ background: transparent;
      <height>25</height>
     </rect>
    </property>
-   <property name="styleSheet">
-    <string notr="true"/>
-   </property>
    <property name="placeholderText">
-    <string>Username</string>
+    <string>Email address</string>
    </property>
    <property name="clearButtonEnabled">
     <bool>true</bool>
@@ -173,11 +170,20 @@ color: rgba(255, 255, 255, 150);</string>
    <property name="text">
     <string>LOG IN</string>
    </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
    <property name="flat">
     <bool>true</bool>
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>lineEdit_email</tabstop>
+  <tabstop>lineEdit_password</tabstop>
+  <tabstop>button_sign_in</tabstop>
+  <tabstop>button_sign_up</tabstop>
+ </tabstops>
  <resources>
   <include location="../resources.qrc"/>
  </resources>

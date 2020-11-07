@@ -4,18 +4,20 @@ import sys
 
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSignal, Qt
-from PyQt5.QtGui import QBrush, QImage, QMovie, QPalette
+from PyQt5.QtGui import QMovie
 from PyQt5.QtWidgets import QDesktopWidget, QDialog, QLabel, QMessageBox
-from package.ui.loginform_ui import Ui_LoginWidget
 
-PRODUCTION = False
-DEBUG = False
+from package.ui.loginform_ui import Ui_LoginWidget
+from package.ui.signupdialog import SignUpDialog
+from package.util.dbhelper import DBHelper
+
+PRODUCTION = True
+LOAD_ANIMATION = False
 
 PASSWORD_NEEDED = False
-PASSWORD_GOOD = True
+PASSWORD_GOOD = False
 
 
-# noinspection PyAttributeOutsideInit
 class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
     password_good = pyqtSignal()
     password_bad = pyqtSignal()
@@ -27,20 +29,24 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
     def __init__(self, parent=None):
         super(LoginForm, self).__init__(parent)
         self.setupUi(self)
-        self.initialize_ui()
+        self._initialize_ui()
 
-    def initialize_ui(self):
+    def _initialize_ui(self):
         # TODO: Docs
         # Custom widgets have stylesheets disabled by default, so enable it
         # https://stackoverflow.com/a/57786338
-        self.setAttribute(Qt.WA_StyledBackground, True)
+        # self.setAttribute(Qt.WA_StyledBackground, True)
 
         self.setWindowFlags(
             Qt.WindowMinimizeButtonHint |
             Qt.WindowCloseButtonHint
         )
 
-        self.center_window()
+        self.signup = SignUpDialog(self)
+        self.db = DBHelper()
+        self._center_window()
+
+        self._credentials = None
 
         # Connections
         if PRODUCTION:
@@ -50,33 +56,57 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
             #  slots but doesn't seem to work by just calling the functions
             #  the old fashioned way.
             self.button_sign_in.clicked.connect(
-                lambda: self.start_load_animation()
-            )
-        else:
-            if DEBUG:
-                self.button_sign_in.clicked.connect(
-                    lambda: self.start_load_animation()
-                )
-                self.button_sign_up.clicked.connect(
-                    lambda: self.stop_load_animation()
-                )
-            if not PASSWORD_NEEDED:
-                if PASSWORD_GOOD:
-                    self.button_sign_in.clicked.connect(
-                        lambda: self._password_always_good()
-                    )
-                else:
-                    self.button_sign_in.clicked.connect(
-                        lambda: self._password_always_bad()
-                    )
+                lambda: self._attempt_login())
+            self.button_sign_up.clicked.connect(
+                lambda: self._open_signup_dialog())
+            self.signup.account_created.connect(
+                lambda x: self.lineEdit_email.setText(x))
+            self.signup.account_created.connect(
+                lambda: self.lineEdit_password.setFocus())
 
-    def center_window(self):
+        else:
+            self.lineEdit_email.setText('NON PRODUCTION CODE')
+            if LOAD_ANIMATION:
+                self.button_sign_in.clicked.connect(
+                    lambda: self._start_load_animation())
+                self.button_sign_up.clicked.connect(
+                    lambda: self._stop_load_animation())
+
+            if not PASSWORD_NEEDED:
+                self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Normal)
+                if PASSWORD_GOOD:
+                    self.lineEdit_password.setText('PASSWORD IS ALWAYS GOOD')
+                    self.button_sign_in.clicked.connect(
+                        lambda: self._password_always_good())
+                else:
+                    self.lineEdit_password.setText('PASSWORD IS ALWAYS BAD')
+                    self.button_sign_in.clicked.connect(
+                        lambda: self._password_always_bad())
+
+    def _attempt_login(self):
+        email = self.lineEdit_email.text()
+        password = self.lineEdit_password.text()
+
+        self._credentials = self.db.authenticate_user(email, password)
+
+        if not self._credentials:
+            self._show_failed_login_message()
+        else:
+            self.password_good.emit()
+
+        return
+
+    def _center_window(self):
         rectangle = self.frameGeometry()
         center_point = QDesktopWidget().availableGeometry().center()
         rectangle.moveCenter(center_point)
         self.move(rectangle.topLeft())
 
-    def start_load_animation(self):
+    def _open_signup_dialog(self):
+        self.signup.lineEdit_username.setFocus()
+        self.signup.show()
+
+    def _start_load_animation(self):
         # TODO: Docs
         self.label_loading = QLabel(self)
         self.label_loading.setGeometry(140, 300, 200, 140)
@@ -86,7 +116,7 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
         self.label_loading.show()
         self.movie_loading.start()  # Non-blocking
 
-    def stop_load_animation(self):
+    def _stop_load_animation(self):
         # TODO: Docs
         self.movie_loading.stop()
         self.label_loading.deleteLater()
@@ -98,13 +128,16 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
         self.password_good.emit()
 
     def _password_always_bad(self):
+        self._show_failed_login_message()
+        self.password_bad.emit()
+
+    def _show_failed_login_message(self):
         # Error message from Twitter.
         # It's friendly, but still gets the message across.
-        error = ('The username and password you entered did not match our '
+        error = ('The username and password you entered does not match our '
                  'records. Please double-check and try again.')
-        QMessageBox.warning(self, 'Sign in', error,
+        QMessageBox.warning(self, 'Sign In', error,
                             QMessageBox.Ok, QMessageBox.Ok)
-        self.password_bad.emit()
 
 
 if __name__ == '__main__':
@@ -112,5 +145,3 @@ if __name__ == '__main__':
     login = LoginForm()
     login.show()
     sys.exit(app.exec_())
-
-
