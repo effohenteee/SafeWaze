@@ -2,9 +2,7 @@
 
 import sys
 
-from PyQt5.QtWidgets import QApplication, QDialog, QMainWindow, QWidget
-# from PyQt5.QtWebEngineWidgets import QWebEngineView
-# from test import Ui_main
+from PyQt5.QtWidgets import QApplication
 from package.ui.dashboard import Dashboard
 from package.ui.loginform import LoginForm
 
@@ -14,8 +12,10 @@ if __name__ == "__main__":
     login = LoginForm()
     login.show()
 
-    if login.exec_() is not None:
-        main_window = Dashboard()
-        main_window.show()
+    # Dashboard is not shown until password_good signal is emitted
+    main_window = Dashboard()
+
+    login.password_good.connect(lambda: main_window.show())
+    login.password_good.connect(lambda: login.deleteLater())
 
     sys.exit(app.exec_())

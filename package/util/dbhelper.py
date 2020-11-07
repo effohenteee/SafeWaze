@@ -18,9 +18,10 @@ class DBHelper:
             }
         )
 
-        email_in_db = email_in_db.count()
+        email_in_db = bool(email_in_db.count())
 
         if not email_in_db:
+            # FIXME: PASSWORD IS IN PLAINTEXT
             self._users_collection.insert(
                 {
                     'username': username,
@@ -29,7 +30,20 @@ class DBHelper:
                 }
             )
 
-        return not bool(email_in_db)
+        # Successful if account was not already in the database
+        success = not email_in_db
+
+        return success
+
+    def authenticate_user(self, email, password):
+        users = self._users_collection.find()
+
+        valid_credentials = False
+        for user in users:
+            if user['email'] == email and user['password'] == password:
+                valid_credentials = True
+
+        return valid_credentials
 
     def clear_database(self):
         self._results_collection.remove()

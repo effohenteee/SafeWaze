@@ -19,7 +19,7 @@ class Ui_LoginWidget(object):
         LoginWidget.setMinimumSize(QtCore.QSize(480, 640))
         LoginWidget.setMaximumSize(QtCore.QSize(480, 640))
         LoginWidget.setStyleSheet("QWidget#LoginWidget {\n"
-"background-image: url(:/Wallpaper/Resources/Wallpapers/Login/login-gradient-480x640.png);\n"
+"background-image: url(:/Wallpaper/Resources/Wallpapers/Login/login-gradient-alpha-100-480x640.png);\n"
 "}\n"
 "\n"
 "QLineEdit {\n"
@@ -35,11 +35,10 @@ class Ui_LoginWidget(object):
 "QPushButton.pressed {\n"
 "background: transparent;\n"
 "}")
-        self.lineEdit_username = QtWidgets.QLineEdit(LoginWidget)
-        self.lineEdit_username.setGeometry(QtCore.QRect(90, 320, 300, 25))
-        self.lineEdit_username.setStyleSheet("")
-        self.lineEdit_username.setClearButtonEnabled(True)
-        self.lineEdit_username.setObjectName("lineEdit_username")
+        self.lineEdit_email = QtWidgets.QLineEdit(LoginWidget)
+        self.lineEdit_email.setGeometry(QtCore.QRect(90, 320, 300, 25))
+        self.lineEdit_email.setClearButtonEnabled(True)
+        self.lineEdit_email.setObjectName("lineEdit_email")
         self.lineEdit_password = QtWidgets.QLineEdit(LoginWidget)
         self.lineEdit_password.setGeometry(QtCore.QRect(90, 380, 300, 25))
         self.lineEdit_password.setInputMask("")
@@ -82,16 +81,20 @@ class Ui_LoginWidget(object):
         font.setWeight(75)
         self.button_sign_in.setFont(font)
         self.button_sign_in.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.button_sign_in.setDefault(True)
         self.button_sign_in.setFlat(True)
         self.button_sign_in.setObjectName("button_sign_in")
 
         self.retranslateUi(LoginWidget)
         QtCore.QMetaObject.connectSlotsByName(LoginWidget)
+        LoginWidget.setTabOrder(self.lineEdit_email, self.lineEdit_password)
+        LoginWidget.setTabOrder(self.lineEdit_password, self.button_sign_in)
+        LoginWidget.setTabOrder(self.button_sign_in, self.button_sign_up)
 
     def retranslateUi(self, LoginWidget):
         _translate = QtCore.QCoreApplication.translate
         LoginWidget.setWindowTitle(_translate("LoginWidget", "SafeWaze Login"))
-        self.lineEdit_username.setPlaceholderText(_translate("LoginWidget", "Username"))
+        self.lineEdit_email.setPlaceholderText(_translate("LoginWidget", "Email address"))
         self.lineEdit_password.setPlaceholderText(_translate("LoginWidget", "Password"))
         self.label_sign_up.setText(_translate("LoginWidget", "Don\'t have an account?"))
         self.button_sign_up.setText(_translate("LoginWidget", "SIGN UP"))
