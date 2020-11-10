@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
 
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: September 21, 2020
+
+Modified: November 10, 2020
+Add documentation
+
+Allows the user to log in or sign up with a new account.
+"""
+
+
 import sys
 
 from PyQt5 import QtWidgets
@@ -11,11 +24,12 @@ from package.ui.loginform_ui import Ui_LoginWidget
 from package.ui.signupdialog import SignUpDialog
 from package.util.dbhelper import DBHelper
 
-PRODUCTION = True
+# Flags for debugging and production testing
+PRODUCTION = False
 LOAD_ANIMATION = False
 
 PASSWORD_NEEDED = False
-PASSWORD_GOOD = False
+PASSWORD_GOOD = True
 
 
 class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
@@ -32,11 +46,31 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
         self._initialize_ui()
 
     def _initialize_ui(self):
-        # TODO: Docs
-        # Custom widgets have stylesheets disabled by default, so enable it
-        # https://stackoverflow.com/a/57786338
-        # self.setAttribute(Qt.WA_StyledBackground, True)
+        """
+        Initialize the UI based on the flags: PRODUCTION, and PASSWORD_GOOD.
 
+        PRODUCTION: If true, the user must log in with a valid email and
+        password. Sign up widget is enabled. If false, no password is needed
+        and sign up widget is disabled.
+
+        PASSWORD_GOOD: If true, no password is needed to proceed to the
+        dashboard. Useful for developers and debugging.
+
+        PRODUCTION is mutually exclusive with PASSWORD_GOOD. This should
+        prevent releasing code that performs no authentication to users.
+
+        Logical combinations are:
+
+        - PRODUCTION == True (Release code)
+
+        - PRODUCTION == False && PASSWORD_GOOD == True (Will always proceed to
+        dashboard)
+
+        - PRODUCTION == False && PASSWORD_GOOD == False (Will always error on
+        login attempt)
+
+        :return: None
+        """
         self.setWindowFlags(
             Qt.WindowMinimizeButtonHint |
             Qt.WindowCloseButtonHint
@@ -72,18 +106,23 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
                 self.button_sign_up.clicked.connect(
                     lambda: self._stop_load_animation())
 
-            if not PASSWORD_NEEDED:
-                self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Normal)
-                if PASSWORD_GOOD:
-                    self.lineEdit_password.setText('PASSWORD IS ALWAYS GOOD')
-                    self.button_sign_in.clicked.connect(
-                        lambda: self._password_always_good())
-                else:
-                    self.lineEdit_password.setText('PASSWORD IS ALWAYS BAD')
-                    self.button_sign_in.clicked.connect(
-                        lambda: self._password_always_bad())
+            self.lineEdit_password.setEchoMode(QtWidgets.QLineEdit.Normal)
+            if PASSWORD_GOOD:
+                self.lineEdit_password.setText('PASSWORD IS ALWAYS GOOD')
+                self.button_sign_in.clicked.connect(
+                    lambda: self._password_always_good())
+            else:
+                self.lineEdit_password.setText('PASSWORD IS ALWAYS BAD')
+                self.button_sign_in.clicked.connect(
+                    lambda: self._password_always_bad())
 
     def _attempt_login(self):
+        """
+        Use the email and password field text to attempt to authenticate the
+        user.
+
+        :return: None
+        """
         email = self.lineEdit_email.text()
         password = self.lineEdit_password.text()
 
@@ -97,12 +136,24 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
         return
 
     def _center_window(self):
+        """
+        Center the dashboard window on the screen.
+
+        :return: None
+        """
         rectangle = self.frameGeometry()
         center_point = QDesktopWidget().availableGeometry().center()
         rectangle.moveCenter(center_point)
         self.move(rectangle.topLeft())
 
     def _open_signup_dialog(self):
+        """
+        The sign up dialog box is always instantiated in the main program,
+        but hidden until the sign up button is clicked. This method sets the
+        focus to the top username field and shows the widget.
+
+        :return: None
+        """
         self.signup.lineEdit_username.setFocus()
         self.signup.show()
 
@@ -123,15 +174,34 @@ class LoginForm(QDialog, QtWidgets.QWidget, Ui_LoginWidget):
         del self.movie_loading
 
     def _password_always_good(self):
+        """
+        Emit password_good signal.
+
+        :return: None
+        """
         # This always returns emits password_good
         # TESTING PURPOSES ONLY
         self.password_good.emit()
 
     def _password_always_bad(self):
+        """
+        Emit password_base signal and show error message.
+
+        :return: None
+        """
         self._show_failed_login_message()
         self.password_bad.emit()
 
     def _show_failed_login_message(self):
+        """
+        Displays error message about failed login attempt.
+
+        Error message from Twitter.
+
+        It's friendly, but still gets the message across.
+
+        :return: None
+        """
         # Error message from Twitter.
         # It's friendly, but still gets the message across.
         error = ('The username and password you entered does not match our '

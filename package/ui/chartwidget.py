@@ -1,13 +1,25 @@
 #!/usr/bin/env python3
 
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: November 6, 2020
+
+Modified: November 10, 2020
+Add documentation
+
+This module provides an implementation of the ChartWidget class.
+"""
+
 import random
 import sys
 import package.util.dbhelper as dbhelper
 
+from PyQt5.QtChart import QBarCategoryAxis, QBarSeries, QBarSet, QChart
+from PyQt5.QtChart import QChartView
 from PyQt5.QtCore import QMargins, Qt
 from PyQt5.QtGui import QPainter
-from PyQt5.QtChart import QBarCategoryAxis, QBarSeries, \
-    QBarSet, QChart, QChartView
 from PyQt5.QtWidgets import QApplication, QVBoxLayout, QWidget
 
 
@@ -17,13 +29,23 @@ class ChartWidget(QWidget):
         self.initialize_ui()
 
     def initialize_ui(self):
+        """
+        Initialize UI elements of the widget.
+
+        :return: None
+        """
         self.chart_view = QChartView(self)
         self.chart_view.setMinimumHeight(300)
-        self.chart_view.resize(800,600)
+        self.chart_view.resize(800, 600)
         self.vbox = QVBoxLayout(self)
         self.vbox.addWidget(self.chart_view)
 
     def plot_random(self):
+        """
+        Plot random sample data to the chart.
+
+        :return: None
+        """
         random.seed()
         data = [random.randint(0, 30) for i in range(20)]
         set0 = QBarSet('Random Result')
@@ -51,8 +73,14 @@ class ChartWidget(QWidget):
         self.chart_view.setChart(chart)
 
     def update_chart(self, num_ticks=10):
+        """
+        Update chart widget.
+
+        :param num_ticks: Number of points to plot on the x-axis
+        :return: None
+        """
         self.db = dbhelper.DBHelper()
-        results = self.db.get_results_database()
+        results = self.db.get_results_collection()
         new_cases_list, dates_list = [], []
 
         if results.count() + 1 < num_ticks:
@@ -101,10 +129,10 @@ class ChartWidget(QWidget):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    mplwidget1 = ChartWidget()
-    mplwidget2 = ChartWidget()
-    mplwidget1.plot_random()
-    mplwidget2.update_chart()
-    mplwidget1.show()
-    mplwidget2.show()
+    chart1 = ChartWidget()
+    chart2 = ChartWidget()
+    chart1.plot_random()
+    chart2.update_chart()
+    chart1.show()
+    chart2.show()
     sys.exit(app.exec_())
