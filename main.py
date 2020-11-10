@@ -1,5 +1,19 @@
 #!/usr/bin/env python3
 
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: September 24, 2020
+
+Modified: November 10, 2020
+Add documentation
+
+Main program that instantiates the login form and dashboard. Signals are
+connected to prevent the dashboard from showing any data until the login is
+authenticated.
+"""
+
 import sys
 
 from PyQt5.QtWidgets import QApplication
