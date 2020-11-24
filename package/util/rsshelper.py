@@ -1,3 +1,15 @@
+#!/usr/bin/env python3
+
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: November 22, 2020
+
+Implements RSSHelper class to get news feed items from CDC RSS feed.
+RSS feed location: https://tools.cdc.gov/api/v2/resources/media/404952.rss
+"""
+
 import feedparser
 
 

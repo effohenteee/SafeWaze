@@ -8,6 +8,8 @@ Date: October 11, 2020
 
 Modified: November 10, 2020
 Add documentation
+Modified: November 22, 2020
+Add RSS feed to widget
 
 The Dahsboard is where the everything is displayed for the user including:
 COVID-19 statistics, risk factors, mapping, and directions.

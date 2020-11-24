@@ -8,6 +8,8 @@ Date: November 7, 2020
 
 Modified: November 10, 2020
 Add documentation
+Modified: November 23, 2020
+Refactor for use with new encryption methods
 
 This module provides an implementation of the SignUpDialog class. This class
 is used when the user is attempting to make a new account.

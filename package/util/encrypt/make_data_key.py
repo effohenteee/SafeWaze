@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #
 # Copyright 2019-present MongoDB, Inc.
 #
@@ -16,6 +18,16 @@
 
 """This file finds and prints or makes and prints a data key used for
 encrpytion."""
+
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: November 23, 2020
+
+Data key generation. 
+Obtained from: https://github.com/mongodb-university/csfle-guides/tree/master/python 
+"""
 
 import base64
 from uuid import UUID

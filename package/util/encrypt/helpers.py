@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 #
 # Copyright 2019-present MongoDB, Inc.
 #
@@ -15,6 +17,16 @@
 #
 
 """Helpers for CSFLE implementation."""
+
+"""
+Course: ECE 4574
+Team: fCsGsU - SafeWaze
+Author: Fonte Clanton
+Date: November 23, 2020
+
+Helper methods for MongoDB encryption/decryption. 
+Modified from: https://github.com/mongodb-university/csfle-guides/tree/master/python 
+"""
 
 import base64
 

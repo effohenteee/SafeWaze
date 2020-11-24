@@ -8,6 +8,8 @@ Date: November 4, 2020
 
 Modified: November 10, 2020
 Add documentation
+Modified: November 23, 2020
+Add methods and refactor for use with encryption
 
 This package contains the DBHelper class which provides methods for accessing
 the MongoDB database.
