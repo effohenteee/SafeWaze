@@ -136,6 +136,7 @@ class CsfleHelper:
 
     def create_json_schema(data_key, dbName, collName):
         collNamespace = f"{dbName}.{collName}"
+        # TODO: Figure out fields
         return {
             collNamespace: {
                 "bsonType": "object",

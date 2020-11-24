@@ -15,12 +15,18 @@ the MongoDB database.
 
 from datetime import datetime
 from pymongo import MongoClient
+import os
 
 from package.util.encrypt.helpers import CsfleHelper
 import package.util.covidstats as covidstats
 
 
 def read_master_key(path="./encrypt/master-key.txt"):
+    pwd = os.path.abspath(os.path.curdir)
+    last = pwd.split('/')[-1]
+    if last == 'SafeWaze':
+        path = pwd + '/package/util' + path[1:]
+
     with open(path, "rb") as f:
         return f.read(96)
 
@@ -163,6 +169,7 @@ class DBHelper:
 if __name__ == '__main__':
     db = DBHelper()
 
+    # TODO: Figure out fields
     example_document = {
         "name": "Jon Doe",
         "email": "jondoe@email.com",

@@ -117,11 +117,28 @@ class SignUpDialog(QDialog, Ui_SignUpDialog):
         else:
             new_username = self.lineEdit_username.text().lower()
             new_email = self.lineEdit_email.text().lower()
-            user_added = self._db.add_user(
-                new_username,
-                new_email,
-                self.lineEdit_password.text()
-            )
+            new_password = self.lineEdit_password.text()
+            # TODO: Figure out fields
+            document = {
+                "name": new_username,
+                "email": new_email,
+                "address": {
+                    "street": "123 Main St.",
+                    "city": "Richmond",
+                    "state": "Virginia",
+                    "zip_code": 23224
+                },
+                "dob": {
+                    "month": 1,
+                    "day": 31,
+                    "year": 1996
+                },
+                "height": 68,
+                "weight": 165,
+                "healthy": True,
+                "password": new_password
+            }
+            user_added = self._db.add_user(document)
 
             if not user_added:
                 email_error = 'That email address is already in use.'
