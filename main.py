@@ -1,35 +1,41 @@
-#!/usr/bin/env python3
+# This Python file uses the following encoding: utf-8
+#!/usr/bin/env python
 
-"""
-Course: ECE 4574
-Team: fCsGsU - SafeWaze
-Author: Fonte Clanton
-Date: September 24, 2020
-
-Modified: November 10, 2020
-Add documentation
-
-Main program that instantiates the login form and dashboard. Signals are
-connected to prevent the dashboard from showing any data until the login is
-authenticated.
-"""
-
+import os
 import sys
+import urllib, json
+import PySide2.QtQml
+from OpenGL import GL
+from PySide2.QtQuick import QQuickView
+from PySide2.QtCore import QAbstractListModel, Qt, QUrl
+from PySide2.QtGui import QGuiApplication
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PyQt5.QtWidgets import *
 
-from PyQt5.QtWidgets import QApplication
-from package.ui.dashboard import Dashboard
-from package.ui.loginform import LoginForm
+from PySide2.QtGui import QGuiApplication
+from PySide2.QtQml import QQmlApplicationEngine
 
+def display():
+    engine.load(QUrl.fromLocalFile('main.qml'))
 
 if __name__ == "__main__":
+    print("Hello")
     app = QApplication(sys.argv)
-    login = LoginForm()
-    login.show()
 
-    # Dashboard is not shown until password_good signal is emitted
-    main_window = Dashboard()
+    # Create the QML user interface.
+#    view = QDeclarativeView()
+#    view.setSource(QUrl('main.qml'))
+#    view.setResizeMode(QDeclarativeView.SizeRootObjectToView)
+#    view.setGeometry(100, 100, 400, 240)
+#    view.show()
 
-    login.password_good.connect(lambda: main_window.show())
-    login.password_good.connect(lambda: login.deleteLater())
+#    app.exec_()
 
-    sys.exit(app.exec_())
+    engine = QQmlApplicationEngine()
+    #engine.rootContext().setContextProperty("backend", backend)
+    #engine.load(QUrl.fromLocalFile('main.qml'))
+    display()
+
+    app.exec_()
+#     pass
