@@ -68,6 +68,10 @@ Window {
         // }
     }
 
+property variant startCoordinate: QtPositioning.coordinate(37.2296, -80.4139)
+property variant endCoordinate: QtPositioning.coordinate(37.141030, -80.401950)
+
+
     Map {
         id: map
         anchors.fill: parent
@@ -76,10 +80,10 @@ Window {
         anchors.bottomMargin: -10
         anchors.leftMargin: -113
         plugin: mapPlugin
-        center: QtPositioning.coordinate(59.91, 10.75) // Oslo
-        zoomLevel: 10
+        center: QtPositioning.coordinate(37.2296, -80.4139) // Oslo
+        zoomLevel: 20
 
-        MapItemView {
+        /*MapItemView {
             model: searchModel
             delegate: MapQuickItem {
                 coordinate: place.location.coordinate
@@ -92,8 +96,77 @@ Window {
                     Text { text: title; font.bold: true }
                 }
             }
+        }*/
+	    MapCircle {
+        	center {
+           	 latitude: 37.2296 
+           	 longitude: -80.4139
+        	}
+        	radius: 5.0
+        	color: 'green'
+        	border.width: 3
+    	}
+
+RouteModel {
+    id: routeModel
+    plugin : map.plugin
+    query:  RouteQuery {
+        id: routeQuery
+    }
+    onStatusChanged: {
+        if (status == RouteModel.Ready) {
+            switch (count) {
+            case 0:
+                // technically not an error
+                map.routeError()
+                break
+            case 1:
+                map.showRouteList()
+                break
+            }
+        } else if (status == RouteModel.Error) {
+            map.routeError()
         }
     }
+}
 
+
+
+MapItemView {
+    model: routeModel
+    delegate: routeDelegate
+}
+
+Component {
+    id: routeDelegate
+
+    MapRoute {
+        id: route
+        route: routeData
+        line.color: "#46a2da"
+        line.width: 5
+        smooth: true
+        opacity: 0.8
+    }
+}
+
+MouseArea{
+anchors.fill: parent
+onClicked: {// clear away any old data in the query
+routeQuery.clearWaypoints();
+
+// add the start and end coords as waypoints on the route
+routeQuery.addWaypoint(startCoordinate)
+routeQuery.addWaypoint(endCoordinate)
+routeQuery.travelModes = RouteQuery.CarTravel
+routeQuery.routeOptimizations = RouteQuery.FastestRoute
+
+routeModel.update();
+
+// center the map on the start coord
+map.center = startCoordinate;
+}
+}
+    }
 
 }
