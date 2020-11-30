@@ -183,15 +183,269 @@ Window {
             }
         }
 
-//	    MapCircle {
-//        	center {
-//           	 latitude: 37.2296
-//           	 longitude: -80.4139
-//        	}
-//        	radius: 5.0
-//        	color: 'green'
-//        	border.width: 3
-//    	}
+//        //Montogomery
+//        MapCircle {
+//            center {
+//             latitude: 37.2296
+//             longitude: -80.4139
+//            }
+//            radius: 2500.0
+//            color: 'yellow'
+//            border.width: 3
+//            opacity: 0.1
+//        }
+
+        //Fairfax
+        MapCircle {
+            center {
+             latitude: 38.847118
+             longitude: -77.306320
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Prince William County
+        MapCircle {
+            center {
+             latitude: 38.675011
+             longitude: -77.314880
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Virginia Beach
+        MapCircle {
+            center {
+             latitude: 36.852924
+             longitude: -75.977982
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Loudon County
+        MapCircle {
+            center {
+             latitude: 37.282250
+             longitude: -79.968900
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Chester County
+        MapCircle {
+            center {
+             latitude: 37.424252
+             longitude: -77.515663
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Henrico County
+        MapCircle {
+            center {
+             latitude: 37.677771
+             longitude: -77.565623
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Richmond
+        MapCircle {
+            center {
+             latitude: 37.540567
+             longitude: -77.433378
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Chesapeake
+        MapCircle {
+            center {
+             latitude: 36.715417
+             longitude: -76.249764
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Norfolk
+        MapCircle {
+            center {
+             latitude: 36.843884
+             longitude: -76.286068
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Arlington County
+        MapCircle {
+            center {
+             latitude: 38.889899
+             longitude: -77.083275
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Alexandria
+        MapCircle {
+            center {
+             latitude: 38.805496
+             longitude: -77.043440
+            }
+            radius: 10000.0
+            color: 'red'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Roanoke
+        MapCircle {
+            center {
+             latitude: 37.270675
+             longitude: -79.944906
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.1
+        }
+
+        //Newport News
+        MapCircle {
+            center {
+             latitude: 36.977708
+             longitude: -76.430423
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Montgomery County
+        MapCircle {
+            center {
+             latitude: 37.175534
+             longitude: -80.387791
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.25
+        }
+
+        //Harrisonburg
+        MapCircle {
+            center {
+             latitude: 38.446058
+             longitude: -78.869449
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Stafford County
+        MapCircle {
+            center {
+             latitude: 38.415386
+             longitude: -77.454872
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Portsmouth
+        MapCircle {
+            center {
+             latitude: 36.832802
+             longitude: -76.297714
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Spotsylvania County
+        MapCircle {
+            center {
+             latitude: 38.182431
+             longitude: -77.657226
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Roanoke County
+        MapCircle {
+            center {
+             latitude: 37.330792
+             longitude: -80.191237
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Suffolk
+        MapCircle {
+            center {
+             latitude: 36.729624
+             longitude: -76.588917
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
+
+        //Lynchburg
+        MapCircle {
+            center {
+             latitude: 37.413914
+             longitude: -79.142817
+            }
+            radius: 10000.0
+            color: 'yellow'
+            border.width: 3
+            opacity: 0.5
+        }
 
         RouteModel {
             id: routeModel
