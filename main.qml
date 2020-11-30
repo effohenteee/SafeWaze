@@ -52,10 +52,11 @@ import QtQuick 2.0
 import QtQuick.Window 2.14
 import QtLocation 5.6
 import QtPositioning 5.6
+import QtQuick.Controls 1.4
 
 Window {
-    width: Qt.platform.os == "android" ? Screen.width : 512
-    height: Qt.platform.os == "android" ? Screen.height : 512
+    width: Qt.platform.os == "android" ? Screen.width : 750
+    height: Qt.platform.os == "android" ? Screen.height : 750
     visible: true
 
     Plugin {
@@ -68,20 +69,21 @@ Window {
         // }
     }
 
-property variant startCoordinate: QtPositioning.coordinate(37.2296, -80.4139)
-property variant endCoordinate: QtPositioning.coordinate(37.141030, -80.401950)
-
+    property variant startCoordinate: QtPositioning.coordinate(37.2296, -80.4139)
+//    property variant endCoordinate: QtPositioning.coordinate(37.141030, -80.401950)
 
     Map {
-        id: map
-        anchors.fill: parent
-        anchors.topMargin: -10
-        anchors.rightMargin: -113
-        anchors.bottomMargin: -10
-        anchors.leftMargin: -113
-        plugin: mapPlugin
-        center: QtPositioning.coordinate(37.2296, -80.4139) // Oslo
-        zoomLevel: 20
+            id: map
+            anchors.fill: parent
+            anchors.topMargin: -10
+            anchors.rightMargin: -113
+            anchors.bottomMargin: -10
+            anchors.leftMargin: -113
+            plugin: mapPlugin
+            center: QtPositioning.coordinate(37.2296, -80.4139)
+            zoomLevel: 20
+            property var startCoordinate1: QtPositioning.coordinate(37.2296, -80.4139)
+            property var endCoordinate1: QtPositioning.coordinate(37.2296, -80.4139)
 
         /*MapItemView {
             model: searchModel
@@ -97,76 +99,187 @@ property variant endCoordinate: QtPositioning.coordinate(37.141030, -80.401950)
                 }
             }
         }*/
-	    MapCircle {
-        	center {
-           	 latitude: 37.2296 
-           	 longitude: -80.4139
-        	}
-        	radius: 5.0
-        	color: 'green'
-        	border.width: 3
-    	}
 
-RouteModel {
-    id: routeModel
-    plugin : map.plugin
-    query:  RouteQuery {
-        id: routeQuery
-    }
-    onStatusChanged: {
-        if (status == RouteModel.Ready) {
-            switch (count) {
-            case 0:
-                // technically not an error
-                map.routeError()
-                break
-            case 1:
-                map.showRouteList()
-                break
+
+
+            GeocodeModel {
+                id: geocodeModel
+                plugin: map.plugin
+                autoUpdate: false
+                property var f: 4
+        //            onStatusChanged: {
+        //                if ((status == GeocodeModel.Ready) || (status == GeocodeModel.Error))
+        //                    mapgeocodeFinished()
+        //            }
+                onLocationsChanged:
+                {
+                    if (count == 1) {
+                        map.center.latitude = get(0).coordinate.latitude
+                        map.center.longitude = get(0).coordinate.longitude
+                        //map.startCoordinate1 = QtPositioning.coordinate(get(0).coordinate.latitude, get(0).coordinate.longitude)
+                        startCoordinate = get(0).coordinate
+                        map.startCoordinate1 = (get(0).coordinate)
+                        geocodeModel.f = map.startCoordinate1
+                        console.log("GEOCODE: ", map.startCoordinate1)
+                    }
+                }
             }
-        } else if (status == RouteModel.Error) {
-            map.routeError()
+
+
+        MapItemView {
+            model: geocodeModel
+            delegate: pointDelegate
         }
-    }
-}
+
+        Component {
+            id: pointDelegate
+
+            MapCircle {
+                id: point
+                radius: 100
+                color: "#46a2da"
+                border.color: "#190a33"
+                border.width: 2
+                smooth: true
+                opacity: 0.25
+                center: locationData.coordinate
+            }
+        }
+
+        GeocodeModel {
+            id: geocodeModel1
+            plugin: map.plugin
+//            onStatusChanged: {
+//                if ((status == GeocodeModel.Ready) || (status == GeocodeModel.Error))
+//                    map.geocodeFinished()
+//            }
+            onLocationsChanged:
+            {
+                if (count == 1) {
+                    map.center.latitude = get(0).coordinate.latitude
+                    map.center.longitude = get(0).coordinate.longitude
+                    map.endCoordinate1 = QtPositioning.coordinate(get(0).coordinate.latitude, get(0).coordinate.longitude)
+                }
+            }
+        }
+
+        MapItemView {
+            model: geocodeModel1
+            delegate: pointDelegate1
+        }
+
+        Component {
+            id: pointDelegate1
+
+            MapCircle {
+                id: point
+                radius: 100
+                color: "#46a2da"
+                border.color: "#190a33"
+                border.width: 2
+                smooth: true
+                opacity: 0.25
+                center: locationData.coordinate
+            }
+        }
+
+//	    MapCircle {
+//        	center {
+//           	 latitude: 37.2296
+//           	 longitude: -80.4139
+//        	}
+//        	radius: 5.0
+//        	color: 'green'
+//        	border.width: 3
+//    	}
+
+        RouteModel {
+            id: routeModel
+            plugin : map.plugin
+            query:  RouteQuery {
+                id: routeQuery
+            }
+            onStatusChanged: {
+                if (status == RouteModel.Ready) {
+                    switch (count) {
+                    case 0:
+                        // technically not an error
+                        map.routeError()
+                        break
+                    case 1:
+                        map.showRouteList()
+                        break
+                    }
+                } else if (status == RouteModel.Error) {
+                    map.routeError()
+                }
+            }
+        }
 
 
 
-MapItemView {
-    model: routeModel
-    delegate: routeDelegate
-}
+        MapItemView {
+            model: routeModel
+            delegate: routeDelegate
+        }
 
-Component {
-    id: routeDelegate
+        Component {
+            id: routeDelegate
 
-    MapRoute {
-        id: route
-        route: routeData
-        line.color: "#46a2da"
-        line.width: 5
-        smooth: true
-        opacity: 0.8
-    }
-}
+            MapRoute {
+                id: route
+                route: routeData
+                line.color: "#46a2da"
+                line.width: 5
+                smooth: true
+                opacity: 0.8
+            }
+        }
 
-MouseArea{
-anchors.fill: parent
-onClicked: {// clear away any old data in the query
-routeQuery.clearWaypoints();
+        Address {
+            id :fromAddress
+            street: "1370 Seneca Drive"
+            city: "Blacksburg"
+            country: "USA"
+            state : "Virginia"
+            postalCode: "24060"
+        }
 
-// add the start and end coords as waypoints on the route
-routeQuery.addWaypoint(startCoordinate)
-routeQuery.addWaypoint(endCoordinate)
-routeQuery.travelModes = RouteQuery.CarTravel
-routeQuery.routeOptimizations = RouteQuery.FastestRoute
+        Address {
+            id :toAddress
+            street: "1451 Seneca Drive"
+            city: "Blacksburg"
+            country: "USA"
+            state : "Virginia"
+            postalCode: "24060"
+        }
 
-routeModel.update();
+        MouseArea{
+        anchors.fill: parent
+            onClicked: {
+                geocodeModel.query = fromAddress
+                geocodeModel.update()
+                geocodeModel1.query = toAddress
+                geocodeModel1.update()
+            }
+        }
 
-// center the map on the start coord
-map.center = startCoordinate;
-}
-}
+        KeyNavigation.left: {
+            // clear away any old data in the query
+            routeQuery.clearWaypoints();
+
+            // add the start and end coords as waypoints on the route
+            routeQuery.addWaypoint(map.startCoordinate1)
+            routeQuery.addWaypoint(map.endCoordinate1)
+            routeQuery.travelModes = RouteQuery.CarTravel
+            routeQuery.routeOptimizations = RouteQuery.FastestRoute
+            routeModel.update();
+
+            // center the map on the start coord
+            map.center = startCoordinate;
+
+        }
+
     }
 
 }
