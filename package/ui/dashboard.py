@@ -18,7 +18,10 @@ COVID-19 statistics, risk factors, mapping, and directions.
 import sys
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, \
+    QVBoxLayout
+from PySide2.QtCore import QUrl
+from PySide2.QtQml import QQmlApplicationEngine
 
 import package.util.rsshelper as rsshelper
 from package.ui.chartwidget import ChartWidget
@@ -46,6 +49,8 @@ class Dashboard(QMainWindow, Ui_Dashboard):
             Qt.WindowMinMaxButtonsHint |
             Qt.WindowCloseButtonHint
         )
+
+        self.engine = QQmlApplicationEngine()
 
         self.frame_graph.deleteLater()
         self.chart = ChartWidget()
@@ -107,6 +112,11 @@ class Dashboard(QMainWindow, Ui_Dashboard):
         self.label_rss_title.setText(ahref)
         self.label_rss_date.setText(date)
         self.textBrowser_summary.setText(summary)
+
+        return
+
+    def show_map(self):
+        self.engine.load(QUrl.fromLocalFile('main.qml'))
 
         return
 

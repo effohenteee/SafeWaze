@@ -20,6 +20,20 @@ from PyQt5.QtWidgets import QApplication
 from package.ui.dashboard import Dashboard
 from package.ui.loginform import LoginForm
 
+import os
+import sys
+import urllib, json
+import PySide2.QtQml
+from PySide2.QtQuick import QQuickView
+from PySide2.QtCore import QAbstractListModel, Qt, QUrl
+from PySide2.QtGui import QGuiApplication
+from PySide2.QtCore import *
+from PySide2.QtGui import *
+from PyQt5.QtWidgets import *
+
+from PySide2.QtGui import QGuiApplication
+from PySide2.QtQml import QQmlApplicationEngine
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -31,5 +45,6 @@ if __name__ == "__main__":
 
     login.password_good.connect(lambda: main_window.show())
     login.password_good.connect(lambda: login.deleteLater())
+    login.password_good.connect(lambda: main_window.show_map())
 
     sys.exit(app.exec_())
