@@ -18,8 +18,7 @@ COVID-19 statistics, risk factors, mapping, and directions.
 import sys
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow, \
-    QVBoxLayout
+from PyQt5.QtWidgets import QApplication, QDesktopWidget, QMainWindow
 from PySide2.QtCore import QUrl
 from PySide2.QtQml import QQmlApplicationEngine
 
