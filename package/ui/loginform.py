@@ -25,7 +25,7 @@ from package.ui.signupdialog import SignUpDialog
 from package.util.dbhelper import DBHelper
 
 # Flags for debugging and production testing
-PRODUCTION = False
+PRODUCTION = True
 LOAD_ANIMATION = False
 
 PASSWORD_NEEDED = False

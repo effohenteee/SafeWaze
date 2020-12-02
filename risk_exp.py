@@ -451,7 +451,7 @@ class Ui_Dashboard(object):
         self.risk_barometer.setValue(bar_value)
 
 
-import resources_rc
+import package.ui.resources_rc
 
 
 if __name__ == "__main__":

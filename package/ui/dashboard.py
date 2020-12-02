@@ -115,7 +115,7 @@ class Dashboard(QMainWindow, Ui_Dashboard):
         return
 
     def show_map(self):
-        self.engine.load(QUrl.fromLocalFile('main.qml'))
+        self.engine.load(QUrl.fromLocalFile('package/ui/main.qml'))
 
         return
 
