@@ -14,11 +14,11 @@ connected to prevent the dashboard from showing any data until the login is
 authenticated.
 """
 
-import sys
-
 from PyQt5.QtWidgets import QApplication
 from package.ui.dashboard import Dashboard
 from package.ui.loginform import LoginForm
+
+import sys
 
 
 if __name__ == "__main__":
@@ -31,5 +31,6 @@ if __name__ == "__main__":
 
     login.password_good.connect(lambda: main_window.show())
     login.password_good.connect(lambda: login.deleteLater())
+    login.password_good.connect(lambda: main_window.show_map())
 
     sys.exit(app.exec_())

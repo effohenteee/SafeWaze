@@ -65,7 +65,7 @@
                </size>
               </property>
               <property name="styleSheet">
-               <string notr="true">background-color: rgb(252, 175, 62);</string>
+               <string notr="true">background-color: rgb(255, 255, 255);</string>
               </property>
               <layout class="QHBoxLayout" name="horizontalLayout_4">
                <item>
@@ -126,9 +126,9 @@ stop: 1 #eee);
                <item>
                 <layout class="QVBoxLayout" name="vbox_risk_factors">
                  <item>
-                  <widget class="QLabel" name="label">
+                  <widget class="QLabel" name="label_combo_0">
                    <property name="text">
-                    <string>Risk Factor</string>
+                    <string>Type of place visiting</string>
                    </property>
                    <property name="alignment">
                     <set>Qt::AlignCenter</set>
@@ -136,42 +136,151 @@ stop: 1 #eee);
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_4">
+                  <widget class="QComboBox" name="comboBox_0">
+                   <item>
+                    <property name="text">
+                     <string>Convenience store</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Supermarket / Mall</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Hair Salon</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Restaurant / Bar</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Playground</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Movie Theatre</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Gym</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Other</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_combo_1">
                    <property name="text">
-                    <string>Risk Factor</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <string>Number of people interacting with</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_5">
+                  <widget class="QComboBox" name="comboBox_1">
+                   <item>
+                    <property name="text">
+                     <string>None</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>1</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>2</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>3</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>4</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>5-9</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>10 or more</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_combo_2">
                    <property name="text">
-                    <string>Risk Factor</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <string>Will everyone be wearing a mask?</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_6">
+                  <widget class="QComboBox" name="comboBox_2">
+                   <item>
+                    <property name="text">
+                     <string>Yes</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>No</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Not all</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLabel" name="label_combo_3">
                    <property name="text">
-                    <string>Risk Factor</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <string>Will everyone be social distancing?</string>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_7">
+                  <widget class="QComboBox" name="comboBox_3">
+                   <item>
+                    <property name="text">
+                     <string>Yes</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>No</string>
+                    </property>
+                   </item>
+                   <item>
+                    <property name="text">
+                     <string>Not All</string>
+                    </property>
+                   </item>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="pushButton">
                    <property name="text">
-                    <string>Risk Factor</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignCenter</set>
+                    <string>Calculate Risk</string>
                    </property>
                   </widget>
                  </item>
@@ -471,11 +580,6 @@ stop: 1 #eee);
          </layout>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="tab_2">
-       <attribute name="title">
-        <string>Maps</string>
-       </attribute>
       </widget>
      </widget>
     </item>
